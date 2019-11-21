@@ -112,6 +112,14 @@ void Game::createGrid(int xy, vector<vector<Room* > > rooms) {
 
 		cout << "|" << endl;
 	}	
+
+	for (int j = 0; j < col; j++) {
+			for (char it : ceil) {
+				cout << it;
+			}	
+			//cout << "+";	
+		}
+		cout << "+" << endl;
 };
 /*
 	vector<char> ceil = {'+','-','-','-','-','-','-'};	
