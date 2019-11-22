@@ -9,6 +9,9 @@
  * ***************************************************************************/
 #include <vector>
 #include "game.h"
+#include "event.h"
+#include "room.h"
+#include "wumpus.h"
 #include <iostream>
 
 using namespace std;
@@ -92,17 +95,10 @@ void Game::createGrid(int xy, vector<vector<Room* > > rooms) {
 			for (char it : ceil) {
 				cout << it;
 			}	
-			//cout << "+";	
 		}
+
 		cout << "+" << endl;
 		
-		/*for (char it : ceil) {
-			cout << it;
-		}
-		*/
-
-		//cout << "+" << endl;
-
 		for (int j = 0; j < col; j++) {
 
 			for (char it : wall) {
@@ -117,23 +113,14 @@ void Game::createGrid(int xy, vector<vector<Room* > > rooms) {
 			for (char it : ceil) {
 				cout << it;
 			}	
-			//cout << "+";	
 		}
 		cout << "+" << endl;
 };
-/*
-	vector<char> ceil = {'+','-','-','-','-','-','-'};	
 
-		for (char j : ceil) {
-			cout << j; 
-		}
-
-		cout << "+" << endl;
-
-		for (int k = 0; k < col; k++) {
-			vector<char> wall = {'|',' ',' ',' ',' ',' ',' '};
-			
-		}
-
-		cout << "|" << endl;
-*/
+/**************************************************************************
+ * Function: setCave 
+ * Desc: sets the event within each room
+ * Params: none 
+ * Pre: an event doesnt exist 
+ * Post: a grid is filled with events 
+ * ***********************************************************************/

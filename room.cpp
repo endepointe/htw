@@ -12,141 +12,75 @@ using namespace std;
 
 /****************************************************************************
  * Function: Room constructor
- * Desc: Sets default values for a room 
+ * Desc: Sets default value for the event character
  * Params: None
  * Output: None
  * Pre: None
- * Post: Class params are set to false
+ * Post: None, yet 
  * *************************************************************************/
 Room::Room() {
-	r_bat = false;
-	r_pit = false;
-	r_gold = false;
-	r_wumpus = false;
+	srand(time(NULL));
+	ec = ' ';
+}
+/****************************************************************************
+ * Function: setEventChar 
+ * Desc: Sets the event of the room
+ * Params: A char of either 'w' 'g' 'p' 'r' 'b' '.' 
+ * Output: None
+ * Pre: None
+ * Post: None, yet 
+ * *************************************************************************/
+void Room::setEventChar(char re) {
+	ec = re;
 }
 
 /****************************************************************************
- * Function: insertBat 
- * Desc: Sets value for bat to true 
+ * Function: getEventChar
+ * Desc: Returns the specified event character
  * Params: None
  * Output: None
  * Pre: None
- * Post: true 
+ * Post: None, yet 
  * *************************************************************************/
-void Room::insertBat() {
-	r_bat = true;
+char Room::getEventChar() {
+	return ec;
 }
 
 /****************************************************************************
- * Function: hasBat 
- * Desc: Returns t or f whether there is a bat 
+ * Function: emitPercept 
+ * Desc: Emits the event if the event is located at 
+ * 	player[loc +/- 1][loc +/- 1]
  * Params: None
  * Output: None
  * Pre: None
- * Post: None 
+ * Post: None, yet 
  * *************************************************************************/
-bool Room::hasBat() const {
-	return r_bat;
-}
+string Room::emitPercept() {
 
-/****************************************************************************
- * Function: insertPit 
- * Desc: Sets value of pit to true 
- * Params: None
- * Output: None
- * Pre: None
- * Post: true
- * *************************************************************************/
-void Room::insertPit() {
-	r_pit = true;
-}
-	
-/****************************************************************************
- * Function: hasPit 
- * Desc: return r of f whether there is a pit in the room 
- * Params: None
- * Output: t or f 
- * Pre: None
- * Post: None 
- * *************************************************************************/	
-bool Room::hasPit() const {
-	return r_pit;
-}
-
-/****************************************************************************
- * Function: insertGold 
- * Desc: Sets value to true 
- * Params: None
- * Output: None
- * Pre: None
- * Post: true 
- * *************************************************************************/
-void Room::insertGold() {
-	r_gold = true;
-}
-	
-/****************************************************************************
- * Function: hasGold 
- * Desc:  returns whether there is gold in the room 
- * Params: None
- * Output: t or f 
- * Pre: None
- * Post: None 
- * *************************************************************************/	
-bool Room::hasGold() const {
-	return r_gold;
-}
-	
-/****************************************************************************
- * Function: insertWumpus 
- * Desc: Sets value to true 
- * Params: None
- * Output: None 
- * Pre: None
- * Post: true 
- * *************************************************************************/	
-void Room::insertWumpus() {
-	r_wumpus = true;
-}
-	
-/****************************************************************************
- * Function: hasWumpus 
- * Desc: return true or false
- * Params: None
- * Output: bool 
- * Pre: None
- * Post: None 
- * *************************************************************************/	
-bool Room::hasWumpus() const {
-	return r_wumpus;
-}
-
-/****************************************************************************
- * Function: percept 
- * Desc: returns a string value given the contents of the room 
- * Params: None
- * Output: 1 0f 4 conditions is true 
- * Pre: None
- * Post: a string is returned 
- * *************************************************************************/
-string Room::percept() {
-
-	if (r_bat) {
-		return "You hear wings flapping.";
+	switch (ec) {
+		case 'w':
+			wumpus = new Wumpus;
+			return wumpus->percept();	
+		break;
+		case 'r':
+			rope = new Rope;
+			return rope->percept();	
+		break;
+		case 'b':
+			bat = new Bat;
+			return bat->percept();	
+		break;
+		case 'p':
+			pit = new Pit;
+			return pit->percept();	
+		break;
+		case 'g':
+			gold = new Gold;
+			return gold->percept();	
+		break;
 	}	
-	
-	if (r_pit) {
-		return "You feel a breeze.";
-	}
 
-	if (r_gold) {
-		return "You see a glimmer nearby.";
-	}
-
-	if (r_wumpus) {
-		return "You smell a terrible stench.";
-	}
-	
-	return "There's nothing in this room.";
+	return "Empty...";
 
 }
+

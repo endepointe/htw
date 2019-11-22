@@ -35,6 +35,7 @@ class Game {
 		Game();
 		vector<vector<Room*> > createRooms(int);
 		void createGrid(int, vector<vector<Room*> >);
+		void setCave();
 };
 
 #endif

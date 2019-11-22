@@ -10,28 +10,30 @@
 #define ROOM_H
 
 #include "event.h"
+#include "wumpus.h"
+#include "gold.h"
+#include "pit.h"
+#include "bat.h"
+#include "rope.h"
 #include <string>
 
 using namespace std;
 
-class Room : public Event {
+class Room {
 
 	private:
-		bool r_bat;
-		bool r_pit;
-		bool r_gold;
-		bool r_wumpus;	
+		Event *event;
+		char ec;
+		Wumpus *wumpus;
+		Gold *gold;
+		Pit *pit;
+		Bat *bat;
+		Rope *rope;
 		
 	public:
 		Room();
-		void insertBat();
-		bool hasBat() const;
-		void insertPit();
-		bool hasPit() const;
-		void insertGold();
-		bool hasGold() const;
-		void insertWumpus();
-		bool hasWumpus() const;
-		string percept(); 
+		string emitPercept(); 
+		char getEventChar();
+		void setEventChar(char);
 };
 #endif
