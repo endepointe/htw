@@ -21,21 +21,54 @@ class Game {
 		int pits = 2;
 		int wumpus = 1;
 		int gold = 1;
+		int rope = 1;
 		int player = 1;
 		int arrows = 3;
-		int arrowLocX;
-		int arrowLocY;
-		int playerLocX;
-		int playerLocY;
-		int wumpusLocX;
-		int wumpusLocY;
-		vector<Room> rooms;
+		int caveSize;
 
+		vector<vector<Room*> > rooms;
+
+		// Locations
+		int arrowSLX;
+		int arrowSLY;
+		int arrowELX;
+		int arrowELY;
+
+		int goldLX;
+		int goldLY;
+
+		int ropeLX;
+		int ropeLY;
+
+		int batLX1;
+		int batLY1;
+		int batLY2;
+		int batLX2; 
+
+		int pitLX1;
+		int pitLY1;
+		int pitLX2;
+		int pitLY2;
+
+		int playerLX;
+		int playerLY;
+
+		int wumpusLX;
+		int wumpusLY;
+		
 	public:
 		Game();
-		vector<vector<Room*> > createRooms(int);
-		void createGrid(int, vector<vector<Room*> >);
-		void setCave();
+		void createRooms(int);
+		void printRooms();
+		void setBats();
+		void setWumpus();
+		void setGold();
+		void setPits();
+		void setRope();
+		void setPlayer();
+
+		void movePlayer(char);
+		void emitEvents(); // line 297
 };
 
 #endif

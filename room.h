@@ -32,6 +32,7 @@ class Room {
 		
 	public:
 		Room();
+		void createPercept();
 		string emitPercept(); 
 		char getEventChar();
 		void setEventChar(char);

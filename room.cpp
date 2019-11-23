@@ -43,7 +43,36 @@ void Room::setEventChar(char re) {
  * Post: None, yet 
  * *************************************************************************/
 char Room::getEventChar() {
-	return ec;
+	return this->ec;
+}
+
+/****************************************************************************
+ * Function: createPercept 
+ * Desc: Creates the percept
+ * Params: None
+ * Output: None
+ * Pre: None
+ * Post: None, yet 
+ * *************************************************************************/
+void Room::createPercept() {
+
+	switch (ec) {
+		case 'W':
+			wumpus = new Wumpus;
+		break;
+		case 'R':
+			rope = new Rope;
+		break;
+		case 'B':
+			bat = new Bat;
+		break;
+		case 'P':
+			pit = new Pit;
+		break;
+		case 'G':
+			gold = new Gold;
+		break;
+	}
 }
 
 /****************************************************************************
@@ -58,29 +87,22 @@ char Room::getEventChar() {
 string Room::emitPercept() {
 
 	switch (ec) {
-		case 'w':
-			wumpus = new Wumpus;
+		case 'W':
 			return wumpus->percept();	
 		break;
-		case 'r':
-			rope = new Rope;
+		case 'R':
 			return rope->percept();	
 		break;
-		case 'b':
-			bat = new Bat;
+		case 'B':
 			return bat->percept();	
 		break;
-		case 'p':
-			pit = new Pit;
+		case 'P':
 			return pit->percept();	
 		break;
-		case 'g':
-			gold = new Gold;
+		case 'G':
 			return gold->percept();	
 		break;
 	}	
 
 	return "Empty...";
-
 }
-
