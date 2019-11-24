@@ -20,5 +20,6 @@ class Pit : public Event {
 	public:
 		Pit();
 		string percept();
+		string encounter();
 };
 #endif

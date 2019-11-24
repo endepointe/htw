@@ -18,3 +18,7 @@ Wumpus::Wumpus() {
 string Wumpus::percept() {
 	return msg;
 }
+
+string Wumpus::encounter() {
+	return "You encountered the Wumpus.";
+}

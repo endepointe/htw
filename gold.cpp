@@ -18,3 +18,7 @@ Gold::Gold() {
 string Gold::percept() {
 	return msg;
 }
+
+string Gold::encounter() {
+	return "You have the gold.";
+}

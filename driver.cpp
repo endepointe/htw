@@ -1,25 +1,32 @@
 #include <iostream>
 #include "game.h"
+#include <cstdlib>
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 
-	srand(time(NULL));
-	Game game;
+///*
 	int input = atoi(argv[1]);
-	int r = rand() % (input * input);
 	bool q = false;
-	char move;
+	//char move[2];
+	string move;
+
+	Game game;
 	
 	game.createRooms(input);	
 
-	while (!q) {
+	while (!game.isOver()) {
+		cout << "io:" << game.isOver() << "wk:" << game.wumpusKilled() << endl;
 		game.printRooms();
-		cout << "move player using wasd: " << endl;
-		cin >> move;
-		game.movePlayer(move);
+		cout << "Use [w] [a] [s] [d] keys to move player." << endl;
+		cout << "Hit the Spacebar then the direction";
+		cout << " to fire your arrows." << endl; 
+		getline(cin, move, '\n');
+	//	if (move[0] == ' '){
+	//	 	game.shootArrow();
+	//	} 
+		game.getPlayerAction(move[0]);
 	}	
-
 	return 0;
 }

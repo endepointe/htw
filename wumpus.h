@@ -20,5 +20,6 @@ class Wumpus : public Event {
 	public:
 		Wumpus();
 		string percept();
+		string encounter();
 };
 #endif

@@ -17,5 +17,6 @@ class Event {
 	public:
 		Event();
 		virtual string percept() = 0;
+		virtual string encounter() = 0;
 };
 #endif

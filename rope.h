@@ -20,5 +20,6 @@ class Rope : public Event {
 	public:
 		Rope();
 		string percept();
+		string encounter();
 };
 #endif

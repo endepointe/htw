@@ -103,6 +103,36 @@ string Room::emitPercept() {
 			return gold->percept();	
 		break;
 	}	
+	return "";
+}
 
-	return "Empty...";
+/****************************************************************************
+ * Function: emitEncounter 
+ * Desc: Emits the encounter event if the event is located at 
+ * 	player[loc +/- 1][loc +/- 1]
+ * Params: None
+ * Output: None
+ * Pre: None
+ * Post: None, yet 
+ * *************************************************************************/
+string Room::emitEncounter() {
+
+	switch (ec) {
+		case 'W':
+			return wumpus->encounter();	
+		break;
+		case 'R':
+			return rope->encounter();	
+		break;
+		case 'B':
+			return bat->encounter();	
+		break;
+		case 'P':
+			return pit->encounter();	
+		break;
+		case 'G':
+			return gold->encounter();	
+		break;
+	}	
+	return "";
 }

@@ -18,3 +18,7 @@ Rope::Rope() {
 string Rope::percept() {
 	return msg;
 }
+
+string Rope::encounter() {
+	return "You found the rope.";
+}

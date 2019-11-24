@@ -18,3 +18,7 @@ Bat::Bat() {
 string Bat::percept() {
 	return msg;
 }
+
+string Bat::encounter() {
+	return "You found a bat.";
+}

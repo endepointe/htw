@@ -20,5 +20,6 @@ class Gold : public Event {
 	public:
 		Gold();
 		string percept();
+		string encounter();
 };
 #endif

@@ -20,5 +20,6 @@ class Bat : public Event {
 	public:
 		Bat();
 		string percept();
+		string encounter();
 };
 #endif

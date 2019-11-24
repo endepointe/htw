@@ -25,14 +25,14 @@ class Game {
 		int player = 1;
 		int arrows = 3;
 		int caveSize;
-
+		bool gameOver;
+		bool killedWumpus;
+		int moves = 0;
 		vector<vector<Room*> > rooms;
 
 		// Locations
-		int arrowSLX;
-		int arrowSLY;
-		int arrowELX;
-		int arrowELY;
+		int arrowLX;
+		int arrowLY;
 
 		int goldLX;
 		int goldLY;
@@ -66,9 +66,17 @@ class Game {
 		void setPits();
 		void setRope();
 		void setPlayer();
+		bool isOver();
+		bool wumpusKilled();
 
-		void movePlayer(char);
+		void movePlayer(char); // line 288
+		
 		void emitEvents(); // line 297
+		void shootArrow(); // line 375
+		bool hasReached(int,int);
+		void hasShot(int,int);
+		void getPlayerAction(char); // line 441
+		char shootDirection(); // line 476
 };
 
 #endif

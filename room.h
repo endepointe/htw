@@ -34,6 +34,7 @@ class Room {
 		Room();
 		void createPercept();
 		string emitPercept(); 
+		string emitEncounter();
 		char getEventChar();
 		void setEventChar(char);
 };

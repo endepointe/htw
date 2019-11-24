@@ -18,3 +18,7 @@ Pit::Pit() {
 string Pit::percept() {
 	return msg;
 }
+
+string Pit::encounter() {
+	return "You fell into the pit.";
+}
