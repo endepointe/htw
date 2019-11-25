@@ -8,25 +8,36 @@ int main(int argc, char *argv[]) {
 
 ///*
 	int input = atoi(argv[1]);
-	bool q = false;
-	//char move[2];
+	string debug = argv[2];
+
+	if (input < 4) {
+		cout << "Dimension cannot be smaller the 4, run the program again." << endl;
+		exit(0);
+	}
+
 	string move;
 
 	Game game;
-	
-	game.createRooms(input);	
 
-	while (!game.isOver()) {
-		cout << "io:" << game.isOver() << "wk:" << game.wumpusKilled() << endl;
-		game.printRooms();
-		cout << "Use [w] [a] [s] [d] keys to move player." << endl;
-		cout << "Hit the Spacebar then the direction";
-		cout << " to fire your arrows." << endl; 
-		getline(cin, move, '\n');
-	//	if (move[0] == ' '){
-	//	 	game.shootArrow();
-	//	} 
-		game.getPlayerAction(move[0]);
-	}	
+	game.createRooms(input);
+
+	if (debug == "true") {
+		while (!game.isOver()) {
+			game.printDevRooms();
+			game.printInstructions();
+			getline(cin, move, '\n');
+			game.getPlayerAction(move[0]);
+		}	
+	} 
+
+	if (debug == "false") {
+		while (!game.isOver()) {
+			game.printProdRooms();
+			game.printInstructions();
+			getline(cin, move, '\n');
+			game.getPlayerAction(move[0]);
+		}
+	}
+
 	return 0;
 }

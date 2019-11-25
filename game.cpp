@@ -28,6 +28,27 @@ Game::Game() {
 	srand(time(NULL));
 	gameOver = false;
 	killedWumpus = false;
+	foundAndReturned = false;
+	goldFound = false;
+	touchedWumpus = false;
+	fellInPit = false;
+	again = true;
+}
+
+Game::~Game() {
+	//vector<vector<Room*> > rooms;
+	///*
+	for (int i = 0; i < caveSize; i++) {
+		for (int j = 0; j < caveSize; j++) {
+			//rooms[i].pop_back();
+			delete rooms[i][j];
+		}
+		rooms[i].clear();
+		//rooms[i].pop_back();
+	}//*/
+	//rooms.pop_back();
+	//rooms.resize(0);
+	rooms.clear();
 }
 
 /**************************************************************************
@@ -58,23 +79,22 @@ void Game::createRooms(int count) {
 	setGold();
 	setPits();
 	setRope();
-	setPlayer();
 //*/
 }
 
 /**************************************************************************
- * Function: printRooms 
- * Desc: creates a grid of specific size with a vector
+ * Function: printDevRooms 
+ * Desc: creates a grid of specific size with a vector in dev mode
  * Params: int 
  * Pre: a grid doesnt exist
  * Post: a grid is filled with vector
  * ***********************************************************************/
-void Game::printRooms() {
+void Game::printDevRooms() {
 
 	int row = caveSize;
 	int col = caveSize;
 	char newChar;
-
+	
 	vector<char> ceil = {'+', '-', '-', '-'};
 	vector<char> wall = {'|',' ', ' ',' '};
 
@@ -89,7 +109,7 @@ void Game::printRooms() {
 		cout << "+" << endl;
 		
 		for (int j = 0; j < col; j++) {
-			newChar = rooms[i][j]->getEventChar();
+			{rooms[i][j]->hasPlayer() ? newChar = '*' : newChar = rooms[i][j]->getEventChar(); };
 			wall[2] = newChar;
 			for (char it : wall) {
 				cout << it;
@@ -106,6 +126,64 @@ void Game::printRooms() {
 		}
 		cout << "+" << endl;
 };
+
+/**************************************************************************
+ * Function: printProdRooms 
+ * Desc: creates a grid of specific size with a vector in prod mode
+ * Params: int 
+ * Pre: a grid doesnt exist
+ * Post: a grid is filled with vector
+ * ***********************************************************************/
+void Game::printProdRooms() {
+
+	int row = caveSize;
+	int col = caveSize;
+	char newChar;
+	
+	vector<char> ceil = {'+', '-', '-', '-'};
+	vector<char> wall = {'|',' ', ' ',' '};
+
+	for (int i = 0; i < row; i++) {
+
+		for (int j = 0; j < col; j++) {
+			for (char it : ceil) {
+				cout << it;
+			}	
+		}
+
+		cout << "+" << endl;
+		
+		for (int j = 0; j < col; j++) {
+			{rooms[i][j]->hasPlayer() ? newChar = '*' : newChar = ' '; };
+			wall[2] = newChar;
+			for (char it : wall) {
+				cout << it;
+			}
+		}
+
+		cout << "|" << endl;
+	}	
+
+	for (int j = 0; j < col; j++) {
+			for (char it : ceil) {
+				cout << it;
+			}	
+		}
+		cout << "+" << endl;
+};
+
+/**************************************************************************
+ * Function: printIntructions 
+ * Desc: prints the intructions to play the game 
+ * Params: none 
+ * Pre: none 
+ * Post: none 
+ * ***********************************************************************/
+void Game::printInstructions() {
+	cout << "Use [w] [a] [s] [d] keys to move player." << endl;
+	cout << "Hit the Spacebar, then Enter, then the direction";
+	cout << " to fire your arrows." << endl; 
+}
 
 /**************************************************************************
  * Function: setBats 
@@ -262,6 +340,7 @@ void Game::setRope() {
 			if (check == ' ') {	
 				rooms[ry][rx]->setEventChar('R');
 				rooms[ry][rx]->createPercept();
+				rooms[ry][rx]->insertPlayer();
 				playerLY = ry;
 				playerLX = rx;
 				has = true;
@@ -269,7 +348,69 @@ void Game::setRope() {
 		}
 	}
 }
+/**************************************************************************
+ * Function: playAgain 
+ * Desc: checks if the user wants to play again. This wil return true 
+ * 	while the game is still going, and will jump into the switch
+ * 	statement once gameOver is flipped to false.
+ * Params: none 
+ * Pre: gameOver is false 
+ * Post: the game is either resumed or exited 
+ * ***********************************************************************/
+/*
+bool Game::playAgain() {
 
+	string input, newInput;	
+	char c, nc;
+	int dim;
+
+	if (gameOver == true) {
+		cout << "Would you like to play again? [y][n]: ";
+		getline(cin, input, '\n');	
+		c = tolower(input[0]);
+		switch (c) {
+			case 'y':
+				cout << "Would you like to use new dimensions? [y][n]: ";
+				getline(cin, newInput, '\n');	
+				nc = tolower(newInput[0]);
+				switch (nc) {
+					case 'y':
+						cout << "Enter the new cave dimension: ";
+						cin >> dim;	
+						rooms.clear();
+						createRooms(dim);
+					break;
+					case 'n':
+						rooms.clear();
+						createRooms(caveSize);	
+					break;
+				}	
+				reset();
+			break;
+			case 'n':
+				cout << "Goodbye" << endl;
+				rooms.clear();
+				again = false;
+			break;
+		}
+	} else {
+		gameOver = false;
+		again = true;
+	}
+	return again;
+}
+
+void Game::reset() {
+	gameOver = false;
+	goldFound = false;
+	foundAndReturned = false;
+	killedWumpus = false;
+	touchedWumpus = false;
+	fellInPit = false;
+	arrows = 3;				
+	moves = 0;
+}
+*/
 /**************************************************************************
  * Function: isOver 
  * Desc: checks if the wumpus or pits have been reached 
@@ -310,48 +451,95 @@ void Game::movePlayer(char dir) {
 		case 'w':
 			if (playerLY - 1 >= 0) {
 				playerLY = playerLY - 1;
-				rooms[playerLY + 1][playerLX]->setEventChar(' ');
+				rooms[playerLY][playerLX]->insertPlayer();
+				rooms[playerLY + 1][playerLX]->removePlayer();
 			}
 		break;
 		case 'a':
 			if (playerLX - 1 >= 0) {
 				playerLX = playerLX - 1;
-				rooms[playerLY][playerLX + 1]->setEventChar(' ');
+				rooms[playerLY][playerLX]->insertPlayer();
+				rooms[playerLY][playerLX + 1]->removePlayer();
 			}
 		break;
 		case 's':
 			if (playerLY + 1 <= caveSize - 1) {
 				playerLY = playerLY + 1;
-				rooms[playerLY - 1][playerLX]->setEventChar(' ');
+				rooms[playerLY][playerLX]->insertPlayer();	
+				rooms[playerLY - 1][playerLX]->removePlayer();
 			}
 		break;
 		case 'd':
 			if (playerLX + 1 <= caveSize - 1) {
 				playerLX = playerLX + 1;
-				rooms[playerLY][playerLX - 1]->setEventChar(' ');
+				rooms[playerLY][playerLX]->insertPlayer();
+				rooms[playerLY][playerLX - 1]->removePlayer();
 			}
 		break;
 	}	
 	moves++;
-	setPlayer();
+	emitEvents();
+	setGameStatus();
+	//hasReached(playerLY, playerLX);
 }
 
 /**************************************************************************
- * Function: setPlayer
- * Desc: sets player on map 
+ * Function: setGameStatus
+ * Desc: sets the status of the game 
  * Params: none 
  * Pre: player location exists 
  * Post: player location placed on map 
  * ***********************************************************************/
-void Game::setPlayer() {
-
-	gameOver = hasReached(playerLY, playerLX);
-	if (gameOver) {
-		cout << "game over" << endl;
-	} else {
-		rooms[playerLY][playerLX]->setEventChar('*');
-		emitEvents();
+void Game::setGameStatus() {
+	hasReached(playerLY, playerLX);
+	if (foundAndReturned) {
+		cout << "You Won, game over." << endl;
+		gameOver = true;
+	} else if (touchedWumpus) {
+		cout << "You Lost, game over." << endl;
+		gameOver = true;
+	} else if (fellInPit) {
+		gameOver = true;
 	}	
+}
+
+/**************************************************************************
+ * Function: hasReached 
+ * Desc: checks if the thing has been reached with the given locations
+ * Params: x and y locations of the calling function 
+ * Pre: a thing has not been reached, returning false
+ * Post: a thing has or has not been reached, returning true 
+ * ***********************************************************************/
+void Game::hasReached(int y, int x) {
+	//system("clear");
+	if ((y == wumpusLY) && (x == wumpusLX)) {
+		cout << rooms[y][x]->emitEncounter() << endl;
+		touchedWumpus = true;
+	}
+	if ((y == pitLY1) && (x == pitLX1)) {
+		cout << rooms[y][x]->emitEncounter() << endl;
+		fellInPit = true;
+	}
+	if ((y == pitLY2) && (x == pitLX2)) {
+		cout << rooms[y][x]->emitEncounter() << endl;
+		fellInPit = true;
+	}
+	if ((y == batLY1) && (x == batLX1)) {
+		cout << rooms[y][x]->emitEncounter() << endl;
+		batsMovePlayer();
+	}
+	if ((y == batLY2) && (x == batLX2)) {
+		cout << rooms[y][x]->emitEncounter() << endl;
+		batsMovePlayer();
+	}
+	if ((y == goldLY) && (x == goldLX)) {
+		cout << rooms[y][x]->emitEncounter() << endl;
+		rooms[goldLY][goldLX]->setEventChar(' ');
+		goldFound = true;
+	}
+	if (rooms[y][x]->getEventChar() == 'R' && goldFound) {
+		foundAndReturned = true;
+	}
 }
 
 /**************************************************************************
@@ -394,11 +582,6 @@ void Game::shootArrow() {
 	int spaces = 0;
 	char dir = shootDirection();
 
-	/* w 119
-	// a 97
-	// s 115
-	   d 100 */
-
 	if (arrows == 0) {
 		cout << "You have no arrows left." << endl;
 	} else {
@@ -427,41 +610,6 @@ void Game::shootArrow() {
 	}
 	cout << "Spaces Shot: " << spaces << endl;
 	cout << "Arrows left: " << arrows << endl;
-}
-
-/**************************************************************************
- * Function: hasReached 
- * Desc: checks if the thing has been reached with the given locations
- * Params: x and y locations of the calling function 
- * Pre: a thing has not been reached, returning false
- * Post: a thing has or has not been reached, returning true 
- * ***********************************************************************/
-bool Game::hasReached(int y, int x) {
-	//system("clear");
-	if ((y == wumpusLY) && (x == wumpusLX)) {
-		cout << rooms[y][x]->emitEncounter() << endl;
-		return true;
-	}
-	if ((y == pitLY1) && (x == pitLX1)) {
-		cout << rooms[y][x]->emitEncounter() << endl;
-		return true;	
-	}
-	if ((y == pitLY2) && (x == pitLX2)) {
-		cout << rooms[y][x]->emitEncounter() << endl;
-		return true;	
-	}
-	if ((y == goldLY) && (x == goldLX)) {
-		cout << rooms[y][x]->emitEncounter() << endl;
-		if (rooms[x][y]->getEventChar() == 'R') {
-			cout << rooms[x][y]->emitPercept();
-			return true;
-		}
-	}
-	// must check for start of game
-	if (rooms[x][y]->getEventChar() == 'R' && moves > 0) {
-		cout << rooms[x][y]->emitPercept();
-		return true;
-	} else { return false; }
 }
 
 /**************************************************************************
@@ -535,18 +683,72 @@ char Game::shootDirection() {
 /**************************************************************************
  * Function: hasShot 
  * Desc: checks if the wumpus has been shot. If it has, user is granted 
- * 	victory and asked to try again. 
+ * 	victory and asked to try again. If the arrow misses the wumpus
+ *	then there is s 75 percent chance that the wumpus will move to a 
+ *	new location on the map.
  * Params: x and y locations of the calling function 
  * Pre: wumpus is alive
  * Post: wumpus is either alive or not 
  * ***********************************************************************/
 void Game::hasShot(int y, int x) {
 	//system("clear");
+	srand(time(NULL));
+	int chance = rand() % 4;
+	int wy;
+	int wx;
+	bool wumpusMoved = false;
+
 	if ((y == wumpusLY) && (x == wumpusLX)) {
 		cout << "Congratulations, you have killed the Wumpus!" << endl;
 		killedWumpus = true;	
 		gameOver = true;
 	} else {
 		killedWumpus = false;
+		if (chance != 3) { // could be any number of range 4
+			rooms[wumpusLY][wumpusLX]->setEventChar(' ');
+			for (int i = 0; i < caveSize * caveSize; i++) {
+				while (wumpusMoved == false) {
+					wy = rand() % caveSize;
+					wx = rand() % caveSize;
+					if (rooms[wy][wx]->getEventChar() == ' ') {
+						rooms[wy][wx]->setEventChar('W');									
+						wumpusMoved = true;
+						wumpusLY = wy;
+						wumpusLX = wx;
+					}
+				}
+			}
+		}				
 	}
+}
+
+/**************************************************************************
+ * Function: batsMovePlayer 
+ * Desc: when the player encounters the bats, the player is moved to 
+ * 	a random, unchecked location. This location can be an empty room,
+ * 	a pit, a location of another bat, or the wumpus. The results
+ * 	of enountering the above remains the same. 
+ * Params: none 
+ * Pre: player is alive
+ * Post: player is either alive or not 
+ * ***********************************************************************/
+void Game::batsMovePlayer() {
+
+	srand(time(NULL));
+
+	int ySaved = playerLY;
+	int xSaved = playerLX;
+	int py;
+	int px;	
+
+	py = rand() % caveSize;
+	px = rand() % caveSize;
+
+	rooms[py][px]->insertPlayer();
+	rooms[ySaved][xSaved]->removePlayer();
+
+	playerLY = py;
+	playerLX = px;
+
+	hasReached(playerLY, playerLX);
 }

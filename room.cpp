@@ -21,6 +21,27 @@ using namespace std;
 Room::Room() {
 	srand(time(NULL));
 	ec = ' ';
+	playerHere = false;
+}
+
+Room::~Room() {
+///*	
+	//if (ec == 'W') {
+		delete wumpus;	
+	//}
+	//if (ec == 'B') {
+		delete bat;
+	//}
+	//if (ec == 'R') {
+		delete rope;	
+	//}
+	//if (ec == 'P') {
+		delete pit;	
+	//}
+//	if (ec == 'G') {
+		delete gold;	
+//	}
+//*/	
 }
 /****************************************************************************
  * Function: setEventChar 
@@ -135,4 +156,41 @@ string Room::emitEncounter() {
 		break;
 	}	
 	return "";
+}
+
+/****************************************************************************
+ * Function: insertPlayer 
+ * Desc: instead of setting the event character for the player location,
+ * 	flips the hasPlayer to true
+ * Params: None
+ * Output: None
+ * Pre: None
+ * Post: player is on map 
+ * *************************************************************************/
+void Room::insertPlayer() {
+	playerHere = true;
+}
+
+/****************************************************************************
+ * Function: removePlayer 
+ * Desc: flips the hasPlayer to false after moving from a room
+ * Params: None
+ * Output: None
+ * Pre: hasPlayer is true 
+ * Post: hasPlayer is false 
+ * *************************************************************************/
+void Room::removePlayer() {
+	playerHere = false;
+}
+
+/****************************************************************************
+ * Function: hasPlayer 
+ * Desc: returns whether the player is in room or not 
+ * Params: None
+ * Output: None
+ * Pre: none
+ * Post: none 
+ * *************************************************************************/
+bool Room::hasPlayer() {
+	return playerHere;
 }

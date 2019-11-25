@@ -24,18 +24,23 @@ class Room {
 	private:
 		Event *event;
 		char ec;
+		bool playerHere;
 		Wumpus *wumpus;
-		Gold *gold;
-		Pit *pit;
-		Bat *bat;
-		Rope *rope;
+		Gold *gold = nullptr;
+		Pit *pit = nullptr;
+		Bat *bat = nullptr;
+		Rope *rope = nullptr;
 		
 	public:
 		Room();
+		~Room();
 		void createPercept();
 		string emitPercept(); 
 		string emitEncounter();
 		char getEventChar();
 		void setEventChar(char);
+		void insertPlayer();
+		void removePlayer();
+		bool hasPlayer();
 };
 #endif

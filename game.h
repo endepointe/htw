@@ -26,7 +26,12 @@ class Game {
 		int arrows = 3;
 		int caveSize;
 		bool gameOver;
+		bool again;
 		bool killedWumpus;
+		bool touchedWumpus;
+		bool fellInPit;
+		bool foundAndReturned;
+		bool goldFound;
 		int moves = 0;
 		vector<vector<Room*> > rooms;
 
@@ -58,25 +63,32 @@ class Game {
 		
 	public:
 		Game();
+		~Game();
 		void createRooms(int);
-		void printRooms();
+		void printDevRooms();
+		void printProdRooms();
+		void printInstructions();
 		void setBats();
 		void setWumpus();
 		void setGold();
 		void setPits();
 		void setRope();
-		void setPlayer();
+		void setGameStatus(); // line 360
 		bool isOver();
+		bool playAgain(); // line 343
+		void reset();
 		bool wumpusKilled();
+		void gfar();
 
 		void movePlayer(char); // line 288
 		
 		void emitEvents(); // line 297
 		void shootArrow(); // line 375
-		bool hasReached(int,int);
+		void hasReached(int,int); // line 391
 		void hasShot(int,int);
 		void getPlayerAction(char); // line 441
 		char shootDirection(); // line 476
+		void batsMovePlayer();
 };
 
 #endif
