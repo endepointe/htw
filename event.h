@@ -1,11 +1,3 @@
-/*****************************************************************************
- * Filename: Event.h
- * Author: Alvin Johns
- * Date: Nov 19, 2019
- * Desc: Declaration file for the virtual events
- * Input: None
- * Output: None
- * **************************************************************************/
 #ifndef EVENT_H
 #define EVENT_H
 
