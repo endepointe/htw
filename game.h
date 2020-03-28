@@ -1,12 +1,4 @@
-/******************************************************************************
- * Filename: Game.h
- * Author: Alvin Johns
- * Date: Nov 19, 2019
- * Desc: Controls the creation of game assets
- * Input: none
- * Output: Per game - 2 bats, 2 pits, 1 Wumpus, 1 Gold stash, Player, 3 Arrows
- * 	player and wumpus location
- * ***************************************************************************/
+
 #ifndef GAME_H
 #define GAME_H
 
