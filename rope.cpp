@@ -1,11 +1,4 @@
-/*****************************************************************************
- * Filename: rope.cpp
- * Author: Alvin Johns
- * Date: Nov 20, 2019
- * Desc: Class to hold the operations of the rope
- * Input: none
- * Output: event string
- ****************************************************************************/
+
 #include "event.h"
 #include "rope.h"
 #include <string>
