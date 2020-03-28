@@ -1,11 +1,4 @@
-/****************************************************************************
- * Filename: Room.cpp
- * Author: Alvin Johns
- * Date: Nov 19, 2019
- * Desc: Declaration file for the rooms
- * Input: None
- * Output: None
- * *************************************************************************/
+
 #include "room.h"
 #include <string>
 using namespace std;
