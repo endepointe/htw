@@ -1,11 +1,4 @@
-/****************************************************************************
- * Filename: Room.h
- * Author: Alvin Johns
- * Date: Nov 19, 2019
- * Desc: Declaration file for the rooms
- * Input: None
- * Output: None
- * *************************************************************************/
+
 #ifndef ROOM_H
 #define ROOM_H
 
