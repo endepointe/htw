@@ -6,7 +6,6 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-///*
 	int input = atoi(argv[1]);
 	string debug = argv[2];
 
@@ -21,23 +20,16 @@ int main(int argc, char *argv[]) {
 
 	game.createRooms(input);
 
-	if (debug == "true") {
-		while (!game.isOver()) {
+	while (!game.isOver()) {
+		if (debug == "true") {
 			game.printDevRooms();
-			game.printInstructions();
-			getline(cin, move, '\n');
-			game.getPlayerAction(move[0]);
-		}	
-	} 
-
-	if (debug == "false") {
-		while (!game.isOver()) {
+		} else {
 			game.printProdRooms();
-			game.printInstructions();
-			getline(cin, move, '\n');
-			game.getPlayerAction(move[0]);
 		}
-	}
+		game.printInstructions();
+		getline(cin, move, '\n');
+		game.getPlayerAction(move[0]);
+	}	
 
 	return 0;
 }
