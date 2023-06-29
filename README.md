@@ -2,7 +2,7 @@ run:
     make
 
 start: 
-    ./a4 <dimensions: int> <debug:bool>
+    ./a4 dimensions debug
 
 ex: 
     ./a4 10 false
