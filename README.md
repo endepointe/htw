@@ -1,1 +1,8 @@
-Start of the hunt the wumpus repo
+run:
+    make
+
+start: 
+    ./a4 <dimensions: int> <debug:bool>
+
+ex: 
+    ./a4 10 false
